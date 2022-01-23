@@ -11,7 +11,17 @@ router.get('/', (req, res, next) => {
     .then((docs) => {
       const response = {
         count: docs.length,
-        products: docs,
+        products: docs.map((doc) => {
+          return {
+            name: doc.name,
+            price: doc.price,
+            _id: doc._id,
+            request: {
+              type: 'GET',
+              url: `http://localhost:3000/products/${doc._id}`,
+            },
+          };
+        }),
       };
       res.status(200).json(response);
     })
@@ -34,7 +44,15 @@ router.post('/', (req, res, next) => {
       console.log(result);
       res.status(201).json({
         message: 'Handling POST request to /products',
-        createdProduct: result,
+        createdProduct: {
+          name: result.name,
+          price: result.price,
+          _id: result._id,
+          request: {
+            type: 'GET',
+            url: `http://localhost:3000/products/${result._id}`,
+          },
+        },
       });
     })
     .catch((err) => {
