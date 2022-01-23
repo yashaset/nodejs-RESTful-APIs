@@ -1,2 +1,4 @@
 /node_modules
 nodemon
+nodemon.json
+.gitignore
