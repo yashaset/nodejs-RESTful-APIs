@@ -91,7 +91,13 @@ router.patch('/:productId', (req, res, next) => {
     .exec()
     .then((result) => {
       console.log(result);
-      res.status(200).json(result);
+      res.status(200).json({
+        message: 'Product updated successfully!',
+        request: {
+          type: 'GET',
+          url: `https://localhost/product/${id}`,
+        },
+      });
     })
     .catch((err) => {
       console.log(err);
